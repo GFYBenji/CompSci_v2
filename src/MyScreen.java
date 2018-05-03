@@ -1,5 +1,6 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -9,43 +10,148 @@ public class MyScreen implements MouseMotionListener, ActionListener, KeyListene
 
     private JFrame window;
     private MyImage I;
-    private JLabel main;
+    private JLabel main, xCoord, yCoord;
+    private JButton save, video, reset, saveConfirm;
+    private JCheckBox saveDBCheck, saveImageCheck;
 
-    public MyScreen(){
-        makeScreen("Window1", makeImage());
+    public MyScreen(String title, int close){
+        mainWindow(title, makeImage(), close);
     }
 
-    protected void makeScreen(String title, BufferedImage image){
+    protected void mainWindow(String title, BufferedImage image, int close){
         window = new JFrame(title);
-        main = new JLabel();
-        window.setBounds(0,0,800,800);
+        window.setDefaultCloseOperation(close);
+        window.setBounds(0,0,800,870);
         window.setLocationRelativeTo(null);
         window.setResizable(false);
         window.setLayout(null);
+
+        save = new JButton("Save Menu");
+        save.setBounds(0,800,100,30);
+        video = new JButton("Save Video");
+        video.setBounds(100,800,100,30);
+        reset = new JButton("Reset Image");
+        reset.setBounds(200,800,125,30);
+        xCoord = new JLabel("X: 0.0");
+        xCoord.setBounds(335, 800, 200, 30);
+        yCoord = new JLabel("Y: 0.0");
+        yCoord.setBounds(535, 800, 200, 30);
+        main = new JLabel();
         main.setBounds(0,0,800,800);
         main.setIcon(new ImageIcon(image));
+
+        save.addActionListener(this);
+        video.addActionListener(this);
+        reset.addActionListener(this);
         main.addMouseListener(this);
         main.addKeyListener(this);
+        main.addMouseMotionListener(this);
+
         window.add(main);
-        window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        window.add(save);
+        window.add(video);
+        window.add(reset);
+        window.add(xCoord);
+        window.add(yCoord);
+
         main.setFocusable(true);
+
         window.setVisible(true);
     }
 
-    private void makeSave(){
-        BufferedImage J = I;
-        try{
-            File output = new File("Julia.png");
-            ImageIO.write(J, "png", output);
-        }catch(IOException ex){
+    protected void saveWindow(){
+        System.out.println("Opening Save Window");
+        JPanel savePanel;
+        JLabel spacer1, spacer2;
 
-        }
+        window = new JFrame("Save");
+        window.setBounds(0,0,120,170);
+        window.setResizable(false);
+        window.setLocationRelativeTo(null);
+
+        savePanel = new JPanel();
+        savePanel.setBorder( BorderFactory.createTitledBorder( "Save" ) );
+        GridBagLayout gbPanel0 = new GridBagLayout();
+        GridBagConstraints gbcPanel0 = new GridBagConstraints();
+        savePanel.setLayout( gbPanel0 );
+
+        saveDBCheck = new JCheckBox( "Save To Database"  );
+        saveDBCheck.setSelected( true );
+        gbcPanel0.gridx = 2;
+        gbcPanel0.gridy = 6;
+        gbcPanel0.gridwidth = 1;
+        gbcPanel0.gridheight = 1;
+        gbcPanel0.fill = GridBagConstraints.BOTH;
+        gbcPanel0.weightx = 1;
+        gbcPanel0.weighty = 0;
+        gbcPanel0.anchor = GridBagConstraints.NORTH;
+        gbPanel0.setConstraints( saveDBCheck, gbcPanel0 );
+        savePanel.add( saveDBCheck );
+
+        saveImageCheck = new JCheckBox( "Save As Image"  );
+        saveImageCheck.setSelected( true );
+        gbcPanel0.gridx = 2;
+        gbcPanel0.gridy = 8;
+        gbcPanel0.gridwidth = 1;
+        gbcPanel0.gridheight = 1;
+        gbcPanel0.fill = GridBagConstraints.BOTH;
+        gbcPanel0.weightx = 1;
+        gbcPanel0.weighty = 0;
+        gbcPanel0.anchor = GridBagConstraints.NORTH;
+        gbPanel0.setConstraints( saveImageCheck, gbcPanel0 );
+        savePanel.add( saveImageCheck );
+
+        spacer1 = new JLabel( "label0"  );
+        spacer1.setForeground( new Color( 240,240,240 ) );
+        gbcPanel0.gridx = 2;
+        gbcPanel0.gridy = 7;
+        gbcPanel0.gridwidth = 1;
+        gbcPanel0.gridheight = 1;
+        gbcPanel0.fill = GridBagConstraints.BOTH;
+        gbcPanel0.weightx = 1;
+        gbcPanel0.weighty = 1;
+        gbcPanel0.anchor = GridBagConstraints.NORTH;
+        gbPanel0.setConstraints( spacer1, gbcPanel0 );
+        savePanel.add( spacer1 );
+
+        spacer2 = new JLabel( "label1"  );
+        spacer2.setForeground( new Color( 240,240,240 ) );
+        gbcPanel0.gridx = 2;
+        gbcPanel0.gridy = 9;
+        gbcPanel0.gridwidth = 1;
+        gbcPanel0.gridheight = 1;
+        gbcPanel0.fill = GridBagConstraints.BOTH;
+        gbcPanel0.weightx = 1;
+        gbcPanel0.weighty = 1;
+        gbcPanel0.anchor = GridBagConstraints.NORTH;
+        gbPanel0.setConstraints( spacer2, gbcPanel0 );
+        savePanel.add( spacer2 );
+
+        saveConfirm = new JButton( "Confirm"  );
+        gbcPanel0.gridx = 2;
+        gbcPanel0.gridy = 10;
+        gbcPanel0.gridwidth = 1;
+        gbcPanel0.gridheight = 1;
+        gbcPanel0.fill = GridBagConstraints.BOTH;
+        gbcPanel0.weightx = 1;
+        gbcPanel0.weighty = 0;
+        gbcPanel0.anchor = GridBagConstraints.NORTH;
+        gbPanel0.setConstraints( saveConfirm, gbcPanel0 );
+        savePanel.add( saveConfirm );
+        saveConfirm.addActionListener(this);
+
+        window.add(savePanel);
+        window.setVisible(true);
+    }
+
+    protected void makeSave(){
+
     }
 
     protected BufferedImage makeImage(){
         BufferedImage img;
         try{
-            img = ImageIO.read(new File("Green Square.png"));
+            img = ImageIO.read(new File("StartScreen.png"));
             return img;
         }catch(IOException ex){
             System.out.println("Failed To Load Image");
@@ -60,9 +166,7 @@ public class MyScreen implements MouseMotionListener, ActionListener, KeyListene
 
     @Override
     public void keyTyped(KeyEvent e) {
-        if(e.getKeyChar() == 's'){
-            makeSave();
-        }if(e.getKeyChar() == 'm'){
+        if(e.getKeyChar() == 'm'){
             window.dispose();
             new MandelScreen();
         }
@@ -70,7 +174,18 @@ public class MyScreen implements MouseMotionListener, ActionListener, KeyListene
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if(e.getSource() == saveConfirm){
+            if(saveImageCheck.isSelected()){
+                makeSave();
+                System.out.println("Saving To Image...");
+                window.dispose();
+            }if(saveDBCheck.isSelected()){
+                System.out.println("Saving To DB...");
+            }
+        }
+        if(e.getSource() == save){
+            saveWindow();
+        }
     }
 
     @Override

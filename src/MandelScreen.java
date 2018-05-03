@@ -1,13 +1,16 @@
+import javax.imageio.ImageIO;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class MandelScreen extends MyScreen{
 
     private  MyImage I;
     private int xS, yS;
 
-    public MandelScreen(){
-
+    protected MandelScreen(){
+        super("Mandelbrot Set", 2);
     }
 
     @Override
@@ -17,6 +20,16 @@ public class MandelScreen extends MyScreen{
         Calculator calc = new Calculator(I, 300);
         I = calc.mandelBrot();
         return I;
+    }
+    @Override
+    protected void makeSave(){
+        BufferedImage J = I;
+        try{
+            File output = new File("Mandelbrot.png");
+            ImageIO.write(J, "png", output);
+        }catch(IOException ex){
+            System.out.println("Failed To Save Image");
+        }
     }
 
     @Override
@@ -30,7 +43,7 @@ public class MandelScreen extends MyScreen{
         int xE = e.getX();
         int yE = e.getY();
         if(xS == xE || yE == yS){
-            System.out.println("Click!");
+            new JuliaScreen(I.convertX(e.getX()), I.convertY(e.getY()));
         }else{
             I.Plot(xS,yS,xE,yE);
             Calculator calc = new Calculator(I, 300);
