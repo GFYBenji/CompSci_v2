@@ -10,26 +10,6 @@ public class MyImage extends BufferedImage {
         super(width, height, imageType);
     }
 
-    public void Plot(Double xS, Double yS, Double xE, Double yE, int winX, int winY) {
-        if (xS > xE) {
-            startX = xE;
-            endX = xS;
-        } else {
-            startX = xS;
-            endX = xE;
-        }
-        if (yS < yE) {
-            startY = yE;
-            endY = yS;
-        } else {
-            startY = yS;
-            endY = yE;
-        }
-        plotX = endX - startX;
-        plotY = startY - endY;
-        windowX = winX;
-        windowY = winY;
-    }
     public void Plot(Double xS, Double yS, Double xE, Double yE) {
         if (xS > xE) {
             startX = xE;
@@ -49,6 +29,16 @@ public class MyImage extends BufferedImage {
         plotY = startY - endY;
         windowY = windowX = 800;
     }
+
+    public void Plot(int xS, int yS, int xE, int yE){
+        startX = convertX(xS);
+        startY = convertY(yS);
+        endX = convertX(xE);
+        endY = convertY(yE);
+        plotX = endX - startX;
+        plotY = startY - endY;
+    }
+
     public Double convertX(int x) {
         //x = x * plotX / windowX + startX;
         return x * plotX / windowX + startX;

@@ -4,103 +4,93 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 
 public class MyScreen implements MouseMotionListener, ActionListener, KeyListener, MouseListener {
 
     private JFrame window;
-    private JLabel main, xCoord, yCoord;
-    private JButton save, video, reset;
+    private MyImage I;
+    private JLabel main;
 
     public MyScreen(){
-        //makeScreen("Mandelbrot", makeImage());
+        makeScreen("Window1", makeImage());
     }
 
-    protected  void makeScreen(String title, BufferedImage image){
+    protected void makeScreen(String title, BufferedImage image){
         window = new JFrame(title);
-        window.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        window.setBounds(0,0,800,870);
+        main = new JLabel();
+        window.setBounds(0,0,800,800);
         window.setLocationRelativeTo(null);
         window.setResizable(false);
         window.setLayout(null);
-
-        save = new JButton("Save Menu");
-        save.setBounds(0,800,100,30);
-        video = new JButton("Save Video");
-        video.setBounds(100,800,100,30);
-        reset = new JButton("Reset Image");
-        reset.setBounds(200,800,125,30);
-        xCoord = new JLabel("X: 0.0");
-        xCoord.setBounds(335, 800, 200, 30);
-        yCoord = new JLabel("Y: 0.0");
-        yCoord.setBounds(535, 800, 200, 30);
-        main = new JLabel();
         main.setBounds(0,0,800,800);
         main.setIcon(new ImageIcon(image));
-
-        save.addActionListener(this);
-        video.addActionListener(this);
-        reset.addActionListener(this);
         main.addMouseListener(this);
         main.addKeyListener(this);
-        main.addMouseMotionListener(this);
-
         window.add(main);
-        window.add(save);
-        window.add(video);
-        window.add(reset);
-        window.add(xCoord);
-        window.add(yCoord);
+        window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        main.setFocusable(true);
         window.setVisible(true);
     }
 
+    private void makeSave(){
+        BufferedImage J = I;
+        try{
+            File output = new File("Julia.png");
+            ImageIO.write(J, "png", output);
+        }catch(IOException ex){
+
+        }
+    }
+
     protected BufferedImage makeImage(){
-        BufferedImage img = null;
+        BufferedImage img;
         try{
             img = ImageIO.read(new File("Green Square.png"));
             return img;
-        }catch(IOException e){
-            e.printStackTrace();
+        }catch(IOException ex){
+            System.out.println("Failed To Load Image");
             return null;
         }
     }
 
-    protected void saveItem() {
-        try {
-            Connection conn = DriverManager.getConnection(
-                    "jdbc:ucanaccess://SetStorage.accdb");
-            Statement s = conn.createStatement();
-            ResultSet rs = s.executeQuery("INSERT INTO JuliaTable(ID) VALUES(JEFF)");
-        } catch (Exception e) {
-            System.err.println("Got an exception! ");
-            System.err.println(e.getMessage());
-        }
+    protected void rePaint(MyImage im){
+        I = im;
+        main.setIcon(new ImageIcon(I));
     }
 
     @Override
-    public void mouseMoved(MouseEvent e) {
-        xCoord.setText("X: " + Integer.toString(e.getX()));
-        yCoord.setText("Y: " + Integer.toString(e.getY()));
+    public void keyTyped(KeyEvent e) {
+        if(e.getKeyChar() == 's'){
+            makeSave();
+        }if(e.getKeyChar() == 'm'){
+            window.dispose();
+            new MandelScreen();
+        }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == save) {
-            saveItem();
-        }
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+
     }
 
     //region Unused Methods
     @Override
     public void mouseDragged(MouseEvent e) {
-
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
 
     }
 
@@ -116,16 +106,6 @@ public class MyScreen implements MouseMotionListener, ActionListener, KeyListene
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
 
     }
 
