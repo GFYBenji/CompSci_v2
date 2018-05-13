@@ -19,14 +19,22 @@ public class JuliaScreen extends MyScreen{
         I = calc.juliaSet(re,im);
         rePaint(I);
     }
+
+    @Override
+    protected BufferedImage makeImage(){
+        BufferedImage img;
+        try{
+            img = ImageIO.read(new File("Loading.gif"));
+            return img;
+        }catch(IOException ex){
+            System.out.println("Failed To Load Image");
+            return null;
+        }
+    }
+
     @Override
     protected void makeSave(){
         BufferedImage J = I;
-        try{
-            File output = new File("Julia.png");
-            ImageIO.write(J, "png", output);
-        }catch(IOException ex){
-            System.out.println("Failed To Save Image");
-        }
+        dirChooser(J);
     }
 }

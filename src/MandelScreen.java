@@ -1,13 +1,12 @@
-import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 public class MandelScreen extends MyScreen{
 
     private  MyImage I;
     private int xS, yS;
+    private JLabel xCoord, yCoord;
 
     protected MandelScreen(){
         super("Mandelbrot Set", 2);
@@ -24,12 +23,19 @@ public class MandelScreen extends MyScreen{
     @Override
     protected void makeSave(){
         BufferedImage J = I;
-        try{
-            File output = new File("Mandelbrot.png");
+        /*try{
+            int num=0;
+            String name = "Mandelbrot.png";
+            File output = new File(name);
+            while(output.exists()){
+                name = "Mandelbrot" +(num++)+".png";
+                output = new File(name);
+            }
             ImageIO.write(J, "png", output);
         }catch(IOException ex){
             System.out.println("Failed To Save Image");
-        }
+        }*/
+        dirChooser(J);
     }
 
     @Override
@@ -51,4 +57,5 @@ public class MandelScreen extends MyScreen{
             rePaint(I);
         }
     }
+
 }

@@ -13,6 +13,8 @@ public class MyScreen implements MouseMotionListener, ActionListener, KeyListene
     private JLabel main, xCoord, yCoord;
     private JButton save, video, reset, saveConfirm;
     private JCheckBox saveDBCheck, saveImageCheck;
+    private Boolean started;
+    private String FILE_SEP = File.separator;
 
     public MyScreen(String title, int close){
         mainWindow(title, makeImage(), close);
@@ -26,7 +28,7 @@ public class MyScreen implements MouseMotionListener, ActionListener, KeyListene
         window.setResizable(false);
         window.setLayout(null);
 
-        save = new JButton("Save Menu");
+        save = new JButton("Save");
         save.setBounds(0,800,100,30);
         video = new JButton("Save Video");
         video.setBounds(100,800,100,30);
@@ -144,14 +146,38 @@ public class MyScreen implements MouseMotionListener, ActionListener, KeyListene
         window.setVisible(true);
     }
 
-    protected void makeSave(){
+    protected void makeVideo(){
+        String args[] = new String[10];
+        args[0] = "ffmpeg";
+        args[1] = "-framerate";
+        args[2] = "25";
+        args[3] = "-i";
+        //args[4] = dir + FILE_SEP + "Mandelbrot%1d.png";
+        args[4] = "Mandelbrot%1d.png";
+        args[5] = "-c:v";
+        args[6] = "libx264";
+        args[7] = "-pix_fmt";
+        args[8] = "yuv420p";
+        //args[9] = dir + "/MandelZoom.mp4";
+        args[9] = "MandelZoom.mp4";
 
+        ProcessBuilder proc = new ProcessBuilder(args);
+        try{
+            proc.start();
+        }catch(IOException e ){
+            System.out.println("Failed To Save Video");
+        }
+
+    }
+
+    protected void makeSave(){
+        System.out.println("Cannot Save this Image(Error 1)");
     }
 
     protected BufferedImage makeImage(){
         BufferedImage img;
         try{
-            img = ImageIO.read(new File("StartScreen.png"));
+            img = ImageIO.read(new File("Resources/LogoStarter.png"));
             return img;
         }catch(IOException ex){
             System.out.println("Failed To Load Image");
@@ -164,12 +190,23 @@ public class MyScreen implements MouseMotionListener, ActionListener, KeyListene
         main.setIcon(new ImageIcon(I));
     }
 
+    protected void dirChooser(BufferedImage output){
+        JFileChooser jfc = new JFileChooser();
+        int retVal = jfc.showSaveDialog(null);
+        File f = new File(jfc.getSelectedFile().getAbsolutePath() + ".png");
+        try{
+            if(retVal==JFileChooser.APPROVE_OPTION){
+                ImageIO.write(output,"png",f);
+            }
+        }catch(IOException ex){
+            System.out.println("Unable to Save File");
+        }
+
+    }
+
     @Override
     public void keyTyped(KeyEvent e) {
-        if(e.getKeyChar() == 'm'){
-            window.dispose();
-            new MandelScreen();
-        }
+
     }
 
     @Override
@@ -186,11 +223,19 @@ public class MyScreen implements MouseMotionListener, ActionListener, KeyListene
         if(e.getSource() == save){
             saveWindow();
         }
+        if(e.getSource() == video){
+            makeVideo();
+        }
+        if(e.getSource() == reset){
+            window.dispose();
+            new MandelScreen();
+        }
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+        window.dispose();
+        new MandelScreen();
     }
 
     @Override
@@ -200,7 +245,8 @@ public class MyScreen implements MouseMotionListener, ActionListener, KeyListene
 
     @Override
     public void mouseMoved(MouseEvent e) {
-
+        xCoord.setText(Integer.toString(e.getX()));
+        yCoord.setText(Integer.toString(e.getY()));
     }
 
     //region Unused Methods

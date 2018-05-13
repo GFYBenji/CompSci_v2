@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="CompSci_v2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/out/artifacts/CompSci_v2_jar/CompSci_v2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
