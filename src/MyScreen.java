@@ -180,7 +180,7 @@ public class MyScreen implements MouseMotionListener, ActionListener, KeyListene
             img = ImageIO.read(new File("Resources/LogoStarter.png"));
             return img;
         }catch(IOException ex){
-            System.out.println("Failed To Load Image");
+            System.out.println("Failed To Load Main Screen Image");
             return null;
         }
     }

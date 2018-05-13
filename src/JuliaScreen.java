@@ -27,7 +27,7 @@ public class JuliaScreen extends MyScreen{
             img = ImageIO.read(new File("Loading.gif"));
             return img;
         }catch(IOException ex){
-            System.out.println("Failed To Load Image");
+            System.out.println("Failed To Load Julia Image Image");
             return null;
         }
     }
