@@ -24,7 +24,7 @@ public class JuliaScreen extends MyScreen{
     protected BufferedImage makeImage(){
         BufferedImage img;
         try{
-            img = ImageIO.read(new File("Loading.gif"));
+            img = ImageIO.read(new File("LogoStarter.png"));
             return img;
         }catch(IOException ex){
             System.out.println("Failed To Load Julia Image Image");

@@ -55,4 +55,16 @@ public class MyImage extends BufferedImage {
     public Double getPlotY(){
         return plotY;
     }
+    public Double getStartX() {
+        return startX;
+    }
+    public Double getEndX() {
+        return endX;
+    }
+    public Double getStartY() {
+        return startY;
+    }
+    public Double getEndY() {
+        return endY;
+    }
 }

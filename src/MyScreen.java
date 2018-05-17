@@ -147,26 +147,6 @@ public class MyScreen implements MouseMotionListener, ActionListener, KeyListene
     }
 
     protected void makeVideo(){
-        String args[] = new String[10];
-        args[0] = "ffmpeg";
-        args[1] = "-framerate";
-        args[2] = "25";
-        args[3] = "-i";
-        //args[4] = dir + FILE_SEP + "Mandelbrot%1d.png";
-        args[4] = "Mandelbrot%1d.png";
-        args[5] = "-c:v";
-        args[6] = "libx264";
-        args[7] = "-pix_fmt";
-        args[8] = "yuv420p";
-        //args[9] = dir + "/MandelZoom.mp4";
-        args[9] = "MandelZoom.mp4";
-
-        ProcessBuilder proc = new ProcessBuilder(args);
-        try{
-            proc.start();
-        }catch(IOException e ){
-            System.out.println("Failed To Save Video");
-        }
 
     }
 

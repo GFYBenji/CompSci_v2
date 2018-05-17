@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class MandelScreen extends MyScreen{
 
@@ -20,21 +21,38 @@ public class MandelScreen extends MyScreen{
         I = calc.mandelBrot();
         return I;
     }
+
+    @Override
+    protected void makeVideo(){
+        Zoom z = new Zoom(25);
+        z.calcXZoom(I.getStartX(), I.getEndX());
+        z.calcYZoom(I.getStartY(), I.getEndY());
+        z.makeZoom();
+        String args[] = new String[10];
+        args[0] = "ffmpeg";
+        args[1] = "-framerate";
+        args[2] = "25";
+        args[3] = "-i";
+        //args[4] = dir + FILE_SEP + "Mandelbrot%1d.png";
+        args[4] = "Mandelbrot_%0d.png";
+        args[5] = "-c:v";
+        args[6] = "libx264";
+        args[7] = "-pix_fmt";
+        args[8] = "yuv420p";
+        args[9] = "/MandelZoom.mp4";
+        args[9] = "MandelZoom.mp4";
+
+        ProcessBuilder proc = new ProcessBuilder(args);
+        try{
+            proc.start();
+        }catch(IOException e ){
+            System.out.println("Failed To Save Video");
+        }
+    }
+
     @Override
     protected void makeSave(){
         BufferedImage J = I;
-        /*try{
-            int num=0;
-            String name = "Mandelbrot.png";
-            File output = new File(name);
-            while(output.exists()){
-                name = "Mandelbrot" +(num++)+".png";
-                output = new File(name);
-            }
-            ImageIO.write(J, "png", output);
-        }catch(IOException ex){
-            System.out.println("Failed To Save Image");
-        }*/
         dirChooser(J);
     }
 
