@@ -2,14 +2,13 @@ import java.awt.*;
 
 public class Calculator {
 
-    private int windowX, windowY;
     private int MAX_ITER;
     private Double cIm, cRe, zIm, zRe, tmp;
     private MyImage I;
 
     public Calculator(MyImage image, int iter){
         I = image;
-        MAX_ITER = iter;
+        MAX_ITER =  iter;
     }
     public MyImage mandelBrot(){
         final long startTime = System.currentTimeMillis();
@@ -27,14 +26,15 @@ public class Calculator {
                 }
 
                 if(iter < MAX_ITER -1){
-                    I.setRGB(x,y, Color.white.getRGB());
+                    //I.setRGB(x,y, Color.white.getRGB());
+                    I.setRGB(x,y, makeColors(iter));
                 }else{
                     I.setRGB(x,y, Color.black.getRGB());
                 }
             }
         }
-        final long endTime = System.currentTimeMillis();
-        System.out.println("Total execution time: " + (endTime - startTime));
+        //final long endTime = System.currentTimeMillis();
+        //System.out.println("Total execution time: " + (endTime - startTime));
         return I;
     }
     public MyImage juliaSet(Double re, Double im){
@@ -56,23 +56,20 @@ public class Calculator {
                     iter++;
                 }
                 if(iter < MAX_ITER -1){
-                    I.setRGB(x,y, Color.white.getRGB());
-
+                    //I.setRGB(x,y, Color.white.getRGB());
+                    I.setRGB(x,y, makeColors(iter));
                 }else{
                     I.setRGB(x,y, Color.black.getRGB());
                 }
             }
         }
-        final long endTime = System.currentTimeMillis();
-        System.out.println("Total execution time: " + (endTime - startTime) );
+        //final long endTime = System.currentTimeMillis();
+        //System.out.println("Total execution time: " + (endTime - startTime) );
         return I;
     }
     private int makeColors(int iter ){
-        int r = (iter>>16) & 255;
-        int g = (iter>>8) & 255;
-        int b = iter & 255;
-        Color cool = new Color(r,g,b);
-        return cool.getRGB();
+        int cool = Color.HSBtoRGB((float)iter/ MAX_ITER,0.5F, 1);
+        return cool;
     }
 
 }

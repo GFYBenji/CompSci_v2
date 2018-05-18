@@ -10,34 +10,27 @@ public class MyImage extends BufferedImage {
         super(width, height, imageType);
     }
 
-    public void Plot(Double xS, Double yS, Double xE, Double yE) {
-        if (xS > xE) {
+    public void Plot(Double xS, Double yS, Double xE){
+        Double tmp;
+        if( xS > xE){
             startX = xE;
             endX = xS;
-        } else {
+        }else{
             startX = xS;
             endX = xE;
         }
-        if (yS < yE) {
-            startY = yE;
-            endY = yS;
-        } else {
-            startY = yS;
-            endY = yE;
+        startY = yS;
+        endY = yS - (xE - xS);
+        if(startY < endY){
+            tmp = endY;
+            endY = startY;
+            startY = tmp;
         }
         plotX = endX - startX;
         plotY = startY - endY;
         windowY = windowX = 800;
     }
 
-    public void Plot(int xS, int yS, int xE, int yE){
-        startX = convertX(xS);
-        startY = convertY(yS);
-        endX = convertX(xE);
-        endY = convertY(yE);
-        plotX = endX - startX;
-        plotY = startY - endY;
-    }
 
     public Double convertX(int x) {
         //x = x * plotX / windowX + startX;
@@ -47,6 +40,11 @@ public class MyImage extends BufferedImage {
     public Double convertY(int y) {
         //y = startY - y * plotY / windowY;
         return (startY - y * plotY / windowY);
+    }
+
+    public void getInfo(){
+        System.out.println("Plot X:" + plotX + ", Plot Y: " + plotY);
+        System.out.println("Start X,Y: " + startX + ", " + startY + "   End X,Y: " + endX + ", " + endY);
     }
 
     public Double getPlotX(){

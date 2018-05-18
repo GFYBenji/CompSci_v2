@@ -13,8 +13,8 @@ public class MyScreen implements MouseMotionListener, ActionListener, KeyListene
     private JLabel main, xCoord, yCoord;
     private JButton save, video, reset, saveConfirm;
     private JCheckBox saveDBCheck, saveImageCheck;
-    private Boolean started;
-    private String FILE_SEP = File.separator;
+    //private Boolean started;
+    //private String FILE_SEP = File.separator;
 
     public MyScreen(String title, int close){
         mainWindow(title, makeImage(), close);
@@ -151,7 +151,7 @@ public class MyScreen implements MouseMotionListener, ActionListener, KeyListene
     }
 
     protected void makeSave(){
-        System.out.println("Cannot Save this Image(Error 1)");
+        System.out.println("Cannot Save Image(Error 1)");
     }
 
     protected BufferedImage makeImage(){
