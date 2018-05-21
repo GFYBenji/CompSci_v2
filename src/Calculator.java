@@ -5,10 +5,12 @@ public class Calculator {
     private int MAX_ITER;
     private Double cIm, cRe, zIm, zRe, tmp;
     private MyImage I;
+    private int[] colors;
 
     public Calculator(MyImage image, int iter){
         I = image;
         MAX_ITER =  iter;
+        makeColors();
     }
     public MyImage mandelBrot(){
         final long startTime = System.currentTimeMillis();
@@ -27,14 +29,14 @@ public class Calculator {
 
                 if(iter < MAX_ITER -1){
                     //I.setRGB(x,y, Color.white.getRGB());
-                    I.setRGB(x,y, makeColors(iter));
+                    I.setRGB(x, y, colors[iter]);
                 }else{
                     I.setRGB(x,y, Color.black.getRGB());
                 }
             }
         }
-        //final long endTime = System.currentTimeMillis();
-        //System.out.println("Total execution time: " + (endTime - startTime));
+        final long endTime = System.currentTimeMillis();
+        System.out.println("Total execution time: " + (endTime - startTime));
         return I;
     }
     public MyImage juliaSet(Double re, Double im){
@@ -57,7 +59,7 @@ public class Calculator {
                 }
                 if(iter < MAX_ITER -1){
                     //I.setRGB(x,y, Color.white.getRGB());
-                    I.setRGB(x,y, makeColors(iter));
+                    I.setRGB(x, y, colors[iter]);
                 }else{
                     I.setRGB(x,y, Color.black.getRGB());
                 }
@@ -67,9 +69,12 @@ public class Calculator {
         //System.out.println("Total execution time: " + (endTime - startTime) );
         return I;
     }
-    private int makeColors(int iter ){
-        int cool = Color.HSBtoRGB((float)iter/ MAX_ITER,0.5F, 1);
-        return cool;
+
+    private void makeColors() {
+        colors = new int[MAX_ITER];
+        for (int i = 0; i < MAX_ITER; i++) {
+            colors[i] = Color.HSBtoRGB((float) i / MAX_ITER, 0.5F, 1);
+        }
     }
 
 }
