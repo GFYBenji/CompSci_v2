@@ -1,3 +1,4 @@
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
@@ -14,17 +15,19 @@ public class MandelScreen extends MyScreen{
     protected BufferedImage makeImage(){
         I = new MyImage(800,800, BufferedImage.TYPE_INT_RGB);
         I.Plot(-2.0,2.0,2.0);
-        Calculator calc = new Calculator(I, 1000);
+        Calculator calc = new Calculator(I, 300);
         I = calc.mandelBrot();
         return I;
     }
 
     @Override
     protected void makeVideo(){
-        Zoom z = new Zoom(25, 5);
-        z.calcXZoom(I.getStartX(), I.getEndX());
-        z.calcYZoom(I.getStartY(), I.getEndY());
-        z.linearZoom();
+        Zoom z = new Zoom(25, 5, 300, "Mandelvideo");
+        //z.calcXZoom(I.getStartX(), I.getEndX());
+        //z.calcYZoom(I.getStartY(), I.getEndY());
+        //z.linearZoom();
+        z.calcZoom(I.getStartX(), I.getEndX(), I.getStartY());
+        z.geometricZoom();
     }
 
     @Override
@@ -51,6 +54,14 @@ public class MandelScreen extends MyScreen{
             Calculator calc = new Calculator(I, 300);
             I = calc.mandelBrot();
             rePaint(I);
+        }
+    }
+    @Override
+    public void keyTyped(KeyEvent e){
+        if(e.getKeyChar() == 'k'){
+            Double r = 0.7885;
+            Double a = 0.0;
+            new JuliaScreen(r*Math.cos(a),r*Math.sin(a));
         }
     }
 }

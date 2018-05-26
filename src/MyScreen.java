@@ -1,18 +1,21 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class MyScreen implements MouseMotionListener, ActionListener, KeyListener, MouseListener {
+public class MyScreen implements MouseMotionListener, ActionListener, KeyListener, MouseListener, ChangeListener {
 
     private JFrame window;
     private MyImage I;
     private JLabel main, xCoord, yCoord;
     private JButton save, video, reset, saveConfirm;
     private JCheckBox saveDBCheck, saveImageCheck;
+    private JSlider slider;
     //private Boolean started;
     //private String FILE_SEP = File.separator;
 
@@ -150,6 +153,19 @@ public class MyScreen implements MouseMotionListener, ActionListener, KeyListene
 
     }
 
+    public void slider(){
+        JFrame window = new JFrame();
+        slider = new JSlider(JSlider.HORIZONTAL,0,360, 0);
+        slider.addChangeListener(this);
+        slider.setMajorTickSpacing(180);
+        slider.setMinorTickSpacing(1);
+        slider.setPaintTicks(true);
+        slider.setPaintLabels(true);
+        window.add(slider);
+        window.pack();
+        window.setVisible(true);
+    }
+
     protected void makeSave(){
         System.out.println("Cannot Save Image(Error 1)");
     }
@@ -257,6 +273,11 @@ public class MyScreen implements MouseMotionListener, ActionListener, KeyListene
 
     @Override
     public void mouseExited(MouseEvent e) {
+
+    }
+
+    @Override
+    public void stateChanged(ChangeEvent e) {
 
     }
     //endregion
