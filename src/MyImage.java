@@ -2,16 +2,16 @@ import java.awt.image.BufferedImage;
 
 public class MyImage extends BufferedImage {
 
-    private Double startX, startY, endX, endY;
+    private double startX, startY, endX, endY;
     private int windowX, windowY;
-    private Double plotX, plotY;
+    private double plotX, plotY;
 
     public MyImage(int width, int height, int imageType) {
         super(width, height, imageType);
     }
 
-    public void Plot(Double xS, Double yS, Double xE){
-        Double tmp;
+    public void Plot(double xS, double yS, double xE) {
+        double tmp;
         if( xS > xE){
             startX = xE;
             endX = xS;
@@ -32,12 +32,12 @@ public class MyImage extends BufferedImage {
     }
 
 
-    public Double convertX(int x) {
+    public double convertX(int x) {
         //x = x * plotX / windowX + startX;
         return x * plotX / windowX + startX;
     }
 
-    public Double convertY(int y) {
+    public double convertY(int y) {
         //y = startY - y * plotY / windowY;
         return (startY - y * plotY / windowY);
     }
@@ -47,22 +47,27 @@ public class MyImage extends BufferedImage {
         System.out.println("Start X,Y: " + startX + ", " + startY + "   End X,Y: " + endX + ", " + endY);
     }
 
-    public Double getPlotX(){
+    public double getPlotX() {
         return plotX;
     }
-    public Double getPlotY(){
+
+    public double getPlotY() {
         return plotY;
     }
-    public Double getStartX() {
+
+    public double getStartX() {
         return startX;
     }
-    public Double getEndX() {
+
+    public double getEndX() {
         return endX;
     }
-    public Double getStartY() {
+
+    public double getStartY() {
         return startY;
     }
-    public Double getEndY() {
+
+    public double getEndY() {
         return endY;
     }
 }

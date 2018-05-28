@@ -3,7 +3,7 @@ import java.awt.*;
 public class Calculator {
 
     private int MAX_ITER;
-    private Double cIm, cRe, zIm, zRe, tmp;
+    private double cIm, cRe, zIm, zRe, tmp;
     private MyImage I;
     private int[] colors;
 
@@ -39,14 +39,15 @@ public class Calculator {
         System.out.println("Total execution time: " + (endTime - startTime));
         return I;
     }
-    public MyImage juliaSet(Double re, Double im){
+
+    public MyImage juliaSet(double re, double im) {
         final long startTime = System.currentTimeMillis();
         //cRe= -0.7;
         //cIm = 0.27015;
         cRe = re;
         cIm = im;
         for(int y = 0; y < I.getHeight(); y++){
-            Double yStart = I.convertY(y); //convert Y up here to be 25% faster(at 200 iterations)
+            double yStart = I.convertY(y); //convert Y up here to be 25% faster(at 200 iterations)
             for (int x = 0; x < I.getWidth(); x ++){
                 zIm = yStart; //I.convertY(y);
                 zRe = I.convertX(x);
