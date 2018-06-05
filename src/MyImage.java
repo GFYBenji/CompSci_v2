@@ -8,6 +8,8 @@ public class MyImage extends BufferedImage {
 
     public MyImage(int width, int height, int imageType) {
         super(width, height, imageType);
+        windowX = width;
+        windowY = height;
     }
 
     public void Plot(double xS, double yS, double xE) {
@@ -28,7 +30,6 @@ public class MyImage extends BufferedImage {
         }
         plotX = endX - startX;
         plotY = startY - endY;
-        windowY = windowX = 800;
     }
 
 

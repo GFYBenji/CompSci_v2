@@ -12,7 +12,8 @@ public class Calculator {
         MAX_ITER =  iter;
         makeColors();
     }
-    public MyImage mandelBrot(){
+
+    protected MyImage mandelBrot() {
         final long startTime = System.currentTimeMillis();
         for(int y = 0; y < I.getHeight(); y++){
             cIm = I.convertY(y);
@@ -40,7 +41,7 @@ public class Calculator {
         return I;
     }
 
-    public MyImage juliaSet(double re, double im) {
+    protected MyImage juliaSet(double re, double im) {
         final long startTime = System.currentTimeMillis();
         //cRe= -0.7;
         //cIm = 0.27015;
@@ -52,7 +53,7 @@ public class Calculator {
                 zIm = yStart; //I.convertY(y);
                 zRe = I.convertX(x);
                 int iter = 0;
-                while((zRe+cRe)*(zRe+cRe) + (zIm+cIm)*(zIm+cIm) < 4 && iter < MAX_ITER -1){
+                while ((zRe * zRe + zIm * zIm) < 4 && iter < MAX_ITER - 1) {
                     tmp = zRe * zRe - zIm * zIm + cRe;
                     zIm = 2.0 * zRe*zIm + cIm;
                     zRe = tmp;

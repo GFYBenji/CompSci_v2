@@ -15,9 +15,8 @@ public class MyScreen implements MouseMotionListener, ActionListener, KeyListene
     private JButton save, video, reset, saveConfirm, videoConfirm;
     private JCheckBox saveDBCheck, saveImageCheck;
     protected JTextField fpsTxt, itersTxt;
-
-    protected JLabel progressLabel;
     protected JProgressBar loadingBar;
+    protected JLabel progressLabel;
 
     public MyScreen(String title, int close){
         mainWindow(title, makeImage(), close);
@@ -396,6 +395,7 @@ public class MyScreen implements MouseMotionListener, ActionListener, KeyListene
         }
         if (e.getSource() == videoConfirm) {
             makeVideo();
+            window.dispose();
         }
     }
 

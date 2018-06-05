@@ -40,17 +40,18 @@ public class Zoom extends Thread {
         stepX1 = 1 - stepX1/(destx1 + 2.0);
     }
 
-    public void spin(JProgressBar bar, JLabel info) {
+    protected void spin(JProgressBar bar, JLabel info) {
         double r = 0.7885;
         double a;
         I.Plot(-2, 2, 2);
+        I.getInfo();
         for (int i = 0; i <= 720; i++) {
             a = Math.toRadians(i / 2);
             status(720, i, bar, info);
             try{
                 ImageIO.write(calc.juliaSet(r * Math.cos(a), r * Math.sin(a)), "png", new File(directory + "Julia_" + i + ".png"));
             }catch(IOException e){
-
+                e.printStackTrace();
             }
         }
         imgName = directory + "Julia_%0d.png";
