@@ -46,14 +46,14 @@ public class JuliaScreen extends MyScreen{
 
     @Override
     protected void makeVideo(){
-        progressWindow();
+        /*progressWindow();
         Thread t1 = new Thread(new Zoom(dirChooser(".mp4"), Integer.valueOf(fpsTxt.getText()), Integer.valueOf(itersTxt.getText())) {
-            @Override
+           //@Override
             public void run() {
-                spin(loadingBar, progressLabel);
+                //spin(loadingBar, progressLabel);
             }
         });
-        t1.start();
+        t1.start();*/
     }
 
     @Override

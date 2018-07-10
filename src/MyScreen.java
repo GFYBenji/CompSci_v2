@@ -30,7 +30,8 @@ public class MyScreen implements MouseMotionListener, ActionListener, KeyListene
     private void mainWindow(String title, BufferedImage image, int close) {
         window = new JFrame(title);
         window.setDefaultCloseOperation(close);
-        window.setBounds(0,0,800,870);
+        //window.setBounds(0,0,800,870);
+        window.setBounds(0,0,1920,1080);
         window.setLocationRelativeTo(null);
         window.setResizable(false);
         window.setLayout(null);
@@ -46,7 +47,7 @@ public class MyScreen implements MouseMotionListener, ActionListener, KeyListene
         yCoord = new JLabel("Y: 0.0");
         yCoord.setBounds(535, 800, 200, 30);
         main = new JLabel();
-        main.setBounds(0,0,800,800);
+        main.setBounds(0,0,1920,1080);
         main.setIcon(new ImageIcon(image));
 
         save.addActionListener(this);

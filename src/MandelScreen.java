@@ -16,7 +16,7 @@ public class MandelScreen extends MyScreen{
 
     @Override
     protected BufferedImage makeImage(){
-        I = new MyImage(800,800, BufferedImage.TYPE_INT_RGB);
+        I = new MyImage(1920,1080, BufferedImage.TYPE_INT_RGB);
         I.Plot(-2, 2, 2);
         Calculator calc = new Calculator(I, 300);
         I = calc.mandelBrot();
